@@ -1,0 +1,49 @@
+﻿@model List<ApiMovieViewModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Sadece min.css yeterli; RTL kullanmıyorsan rtl dosyalarını da ekleme -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <title>IMDb Listesi</title>
+</head>
+<body>
+    <div class="container my-4">
+        <h3>IMDb Listesi</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Rank</th>
+                        <th>IMDB Rating</th>
+                        <th>Film Adı</th>
+                        <th>Yılı</th>
+                        <th>Türü</th>
+                        <th>Yönetmeni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td>@x.rank</td>
+                            <td>@x.IMDB_Rating</td>
+                            <td>@x.Series_Title</td>
+                            <td>@x.Released_Year</td>
+                            <td>@x.Genre</td>
+                            <td>@x.Director</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿@model List<FootballNewsViewModel.Result>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Sadece min.css yeterli; RTL kullanmıyorsan rtl dosyalarını da ekleme -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <title>IMDb Listesi</title>
+</head>
+<body>
+    <div class="container my-4">
+        <h3>Futbol Haberler Listesi</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Başlık</th>
+                        <th>Kategori</th>
+                        <th>Lig</th>
+                        <th>Takım</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td>@x.id</td>
+                            <td>@x.title</td>
+
+                            <td>
+                                @string.Join(", ",
+                                         (x.categories ?? Array.Empty<int?>())
+                                         .Where(v => v.HasValue)
+                                         .Select(v => v.Value))
+                            </td>
+
+                            <td>
+                                @string.Join(", ",
+                                         (x.leagues ?? Array.Empty<int?>())
+                                         .Where(v => v.HasValue)
+                                         .Select(v => v.Value))
+                            </td>
+
+                            <td>
+                                @string.Join(", ", x.teams ?? Array.Empty<int>())
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

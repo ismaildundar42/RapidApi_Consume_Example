@@ -1,0 +1,96 @@
+﻿@model List<BookingApiViewModel.Result>
+@{
+    Layout = null;
+    int id = 0;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Booking – Şehirden Otel Arama</title>
+
+    <!-- Bootstrap CSS (LOCAL) -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        /* Küçük dokunuşlar */
+        body {
+            padding-top: 20px;
+        }
+
+        .page-card {
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card shadow-sm page-card">
+            <div class="card-body">
+
+                <h1 class="h4 mb-4">Şehir ID ile Otel Arama</h1>
+
+                @using (Html.BeginForm("Index", "BookingByCity", FormMethod.Post, new { @class = "row g-3" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="city_id">Şehir ID giriniz</label>
+                        <input id="city_id" type="text" name="cit_id" class="form-control" placeholder="-1746443" />
+                    </div>
+                    <div class="col-12 col-md-6 d-flex align-items-end">
+                        <button class="btn btn-success w-100 w-md-auto">Şehirden Otel Bul</button>
+                    </div>
+                }
+
+                <hr class="my-4" />
+
+                <h2 class="h5 mb-3">Otel Listesi</h2>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:72px">#</th>
+                                <th>Otel Adı</th>
+                                <th style="width:140px">Otel Puanı</th>
+                                <th>Otel Detaylar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var x in Model)
+                                {
+                                    id++;
+                                    <tr>
+                                        <td>@id</td>
+                                        <td>@x.name</td>
+                                        <td>@x.reviewScore</td>
+                                        <td>
+                                            Giriş: @x.checkinDate &nbsp;|&nbsp;
+                                            Çıkış: @x.checkoutDate
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">
+                                        Henüz sonuç yok. Bir şehir ID girip aratın.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (LOCAL) -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
